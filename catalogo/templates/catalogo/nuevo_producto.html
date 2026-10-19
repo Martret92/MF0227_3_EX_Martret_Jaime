@@ -1,0 +1,25 @@
+{% extends "catalogo/base.html" %}
+
+{% block title %}Añadir producto{% endblock %}
+
+{% block contenido %}
+    <h2>Añadir producto</h2>
+    {% if formulario.errors %}
+        <p role="alert">No se ha guardado el producto. Revisa los errores del formulario.</p>
+    {% endif %}
+    <form method="post" action="{% url 'catalogo:nuevo_producto' %}">
+        {% csrf_token %}
+        {{ formulario.non_field_errors }}
+        {% for campo in formulario %}
+            <div class="campo">
+                {{ campo.label_tag }}
+                {{ campo }}
+                {{ campo.errors }}
+            </div>
+        {% endfor %}
+        <div class="acciones">
+            <button type="submit">Guardar producto</button>
+            <a href="{% url 'catalogo:lista_productos' %}">Volver al listado</a>
+        </div>
+    </form>
+{% endblock %}
