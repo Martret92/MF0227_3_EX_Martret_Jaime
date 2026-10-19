@@ -1,6 +1,8 @@
 from decimal import Decimal
 from unittest import TestCase
 
+from django.test import TestCase as DjangoTestCase
+
 from .dominio import ProductoBase, ProductoOferta
 
 
@@ -48,3 +50,9 @@ class ProductoTests(TestCase):
                     ProductoBase("Muestra", valor)
                 with self.assertRaises(ValueError):
                     ProductoOferta("Muestra", 100, valor)
+
+
+class ListadoProductosTests(DjangoTestCase):
+    def test_productos_responde_http_200(self):
+        respuesta = self.client.get("/productos/")
+        self.assertEqual(respuesta.status_code, 200)
