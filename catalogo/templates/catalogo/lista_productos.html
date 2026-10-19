@@ -1,0 +1,33 @@
+{% extends "catalogo/base.html" %}
+
+{% block title %}Listado de productos{% endblock %}
+
+{% block contenido %}
+    <h2>Productos</h2>
+    <a class="boton" href="{% url 'catalogo:nuevo_producto' %}">Añadir producto</a>
+    <div class="tabla">
+        <table>
+            <caption>Productos registrados y precios en euros</caption>
+            <thead>
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Precio original</th>
+                    <th scope="col">Descuento</th>
+                    <th scope="col">Precio final</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for producto in productos %}
+                    <tr>
+                        <td>{{ producto.nombre }}</td>
+                        <td>{{ producto.precio|floatformat:2 }} €</td>
+                        <td>{{ producto.descuento }} %</td>
+                        <td>{{ producto.precio_final|floatformat:2 }} €</td>
+                    </tr>
+                {% empty %}
+                    <tr><td colspan="4">Todavía no hay productos registrados.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
